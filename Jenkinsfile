@@ -11,6 +11,10 @@ pipeline {
                         label 'aosp-builder'
                     }
                 }
+                environment {
+                    TG_TOKEN     = credentials('ppd_bot_token')
+                    CHAT_ID = credentials('puhq_chat_id')
+                }
                 axes {
                     axis {
                         name 'VARIANT'
