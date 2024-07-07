@@ -9,7 +9,7 @@ curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CH
 
 blissify --$1 spes
 
-if [ $? == 0]; then
+if [ $? == 0 ]; then
 MESSAGE_R=$(cat $SCRIPTS_DIR/build_success)
 MESSAGE=${MESSAGE_R/'__VARIANT__'/"$1"}
 curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE"
