@@ -6,7 +6,9 @@ pipeline {
     }
     stages {
         stage('Sync'){
-            sh 'chmod +x atomsync.sh && bash atomsync.sh'
+            steps {
+                sh 'chmod +x atomsync.sh && bash atomsync.sh'
+            }
         }
         stage('Build') {
             matrix {
