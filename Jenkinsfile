@@ -1,5 +1,9 @@
 pipeline {
-    agent none
+    agent {
+        node {
+            label 'aosp-builder'
+        }
+    }
     stages {
         stage('Sync'){
             sh 'chmod +x atomsync.sh && bash atomsync.sh'
