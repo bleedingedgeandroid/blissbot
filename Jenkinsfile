@@ -10,7 +10,7 @@ pipeline {
                 sh 'chmod +x atomsync.sh && bash atomsync.sh'
             }
         }
-        stage('Build') {
+        stage('BuildAllVariants') {
             matrix {
                 agent {
                     node {
@@ -28,15 +28,17 @@ pipeline {
                     }
                 }
                 stages {
-                    script{
-                        stage("Building ${VARIANT}") {
-                            steps {
-                                echo "Building BlissROM for ${VARIANT}"
-                                sh 'chmod +x ./build.sh'
-                                sh "./build.sh ${VARIANT}"
+                    stage('BuildVariant'){
+                        script{
+                            stage("Building ${VARIANT}") {
+                                steps {
+                                    echo "Building BlissROM for ${VARIANT}"
+                                    sh 'chmod +x ./build.sh'
+                                    sh "./build.sh ${VARIANT}"
+                                }
                             }
                         }
-                    }
+                    }     
                 }
             }
         }
