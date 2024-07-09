@@ -24,7 +24,7 @@ pipeline {
                 axes {
                     axis {
                         name 'VARIANT'
-                        values 'foss', 'gapps', 'microg', 'vanilla'
+                        values 'gapps', 'microg', 'vanilla'
                     }
                 }
                 stages {
