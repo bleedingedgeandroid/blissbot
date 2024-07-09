@@ -16,7 +16,23 @@ MESSAGE_R=$(cat $SCRIPTS_DIR/build_success)
 MESSAGE=${MESSAGE_R/'__VARIANT__'/"$1"}
 curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" > /dev/null
 
-echo "BUILD SUCCESS!"
+PACKAGE=grep -P "Package Complete: out/target/product/*/*" build.log | sed 's/Package Complete: //'
+
+echo "BUILD SUCCESS! Package: $PACKAGE"
+echo "Uploading........."
+
+curl -T "$PACKAGE" https://pixeldrain.com/api/file/ -o out/pixeldrain.json
+PIXELDRAIN_ID=$(cat out/pixeldrain.json |  python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
+PIXELDRAIN_LINK="https://pixeldrain.com/api/file/$PIXELDRAIN_ID"
+
+MESSAGE_R=$(cat $SCRIPTS_DIR/release_template)
+MESSAGE=${MESSAGE_R/'VARIANT'/"$1"}
+MESSAGE=${MESSAGE/'DATE'/"$(date +\"%x\")"}
+MESSAGE=${MESSAGE/'PIXELDRAIN_URL'/"$PIXELDRAIN_LINK"}
+MESSAGE=${MESSAGE/'MD5SUM'/"$(md5sum $PACKAGE)"}
+
+curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" > /dev/null
+
 else
 MESSAGE_R=$(cat $SCRIPTS_DIR/build_fail)
 MESSAGE=${MESSAGE_R/'__VARIANT__'/"$1"}
