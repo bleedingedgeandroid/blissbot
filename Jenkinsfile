@@ -28,20 +28,15 @@ pipeline {
                     }
                 }
                 stages {
-                    stage('BuildVariant'){
-                        script{
-                            stage("Building ${VARIANT}") {
-                                steps {
-                                    echo "Building BlissROM for ${VARIANT}"
-                                    sh 'chmod +x ./build.sh'
-                                    sh "./build.sh ${VARIANT}"
-                                }
-                            }
+                    stage("Building One Variant") {
+                        steps {
+                            echo "Building BlissROM for ${VARIANT}"
+                            sh 'chmod +x ./build.sh'
+                            sh "./build.sh ${VARIANT}"
                         }
-                    }     
+                    }
                 }
-            }
+            }     
         }
     }
-
 }
