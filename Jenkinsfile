@@ -10,6 +10,11 @@ pipeline {
                 sh 'chmod +x atomsync.sh && bash atomsync.sh'
             }
         }
+        stage('Patch Source'){
+            steps{
+                sh 'chmod +x patchsource.sh && bash patchsource.sh'
+            }
+        }
         stage('BuildAllVariants') {
             matrix {
                 agent {
