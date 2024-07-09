@@ -5,5 +5,7 @@
 
 cd $ROM_DIRECTORY
 echo $(pwd)
-repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
-repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all) 
+
+export PYTHONUNBUFFERED="1"
+repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all) |& tee Sync.1.log
+repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all) |& tee Sync.2.log
