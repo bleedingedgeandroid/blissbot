@@ -17,7 +17,10 @@ MESSAGE_R=$(cat $SCRIPTS_DIR/build_success)
 MESSAGE=${MESSAGE_R/'__VARIANT__'/"$1"}
 curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" > /dev/null
 
-PACKAGE=grep -P "Package Complete: out/target/product/*/*" build.log | sed 's/Package Complete: //'
+# PACKAGE=$(grep -P "Package Complete: out/target/product/.*/.*" build.log | sed 's/Package Complete: //') Normal rom
+
+PACKAGE=$(grep -P "Zip:  .*/out/target/product/.*/.*" build.log | sed 's/Zip:  //') #BlissROMs
+
 
 echo "BUILD SUCCESS! Package: $PACKAGE"
 echo "Uploading........."
