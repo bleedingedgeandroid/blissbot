@@ -25,7 +25,7 @@ PACKAGE=$(grep -P "Zip:  .*/out/target/product/.*/.*" build.log | sed 's/Zip:  /
 echo "BUILD SUCCESS! Package: $PACKAGE"
 echo "Uploading........."
 
-curl -T "$PACKAGE" https://pixeldrain.com/api/file/ -o out/pixeldrain.json
+curl -T "$PACKAGE" https://pixeldrain.com/api/file/ -o out/pixeldrain.json -4
 PIXELDRAIN_ID=$(cat out/pixeldrain.json |  python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 PIXELDRAIN_LINK="https://pixeldrain.com/api/file/$PIXELDRAIN_ID"
 
