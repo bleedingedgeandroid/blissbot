@@ -15,7 +15,7 @@ blissify --$1 spes |& tee build.log
 if [ $? == 0 ]; then
 MESSAGE_R=$(cat $SCRIPTS_DIR/build_success)
 MESSAGE=${MESSAGE_R/'__VARIANT__'/"$1"}
-curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode="MarkdownV2"> /dev/null
+curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode="MarkdownV2"
 
 # PACKAGE=$(grep -P "Package Complete: out/target/product/.*/.*" build.log | sed 's/Package Complete: //') Normal rom
 
@@ -35,13 +35,13 @@ MESSAGE=${MESSAGE/'DATE'/"$(date +\"%x\")"}
 MESSAGE=${MESSAGE/'PIXELDRAIN_URL'/"$PIXELDRAIN_LINK"}
 MESSAGE=${MESSAGE/'MD5SUM'/"$(md5sum $PACKAGE)"}
 
-curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode="MarkdownV2"> /dev/null
+curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode="MarkdownV2"
 
 else
 MESSAGE_R=$(cat $SCRIPTS_DIR/build_fail)
 MESSAGE=${MESSAGE_R/'__VARIANT__'/"$1"}
 echo "making sure file is not empty" >> out/error.log
-curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendDocument -F chat_id=$CHAT_ID -F caption="$MESSAGE" -F document=@out/error.log -F parse_mode="MarkdownV2" > /dev/null
+curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendDocument -F chat_id=$CHAT_ID -F caption="$MESSAGE" -F document=@out/error.log -F parse_mode="MarkdownV2"
 
 echo "BUILD FAILED!"
 fi
