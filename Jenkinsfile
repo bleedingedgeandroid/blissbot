@@ -25,6 +25,7 @@ pipeline {
                 environment {
                     TG_TOKEN     = credentials('ppd_bot_token')
                     CHAT_ID = credentials('puhq_chat_id')
+                    PIXELDRAIN_API_KEY = credentials('pixeldrain_api_key')
                 }
                 axes {
                     axis {
