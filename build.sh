@@ -31,9 +31,9 @@ PIXELDRAIN_LINK="https://pixeldrain.com/api/file/$PIXELDRAIN_ID"
 
 MESSAGE_R=$(cat $SCRIPTS_DIR/release_template)
 MESSAGE=${MESSAGE_R/'VARIANT'/"$1"}
-MESSAGE=${MESSAGE/'DATE'/"$(date +\"%x\")"}
+MESSAGE=${MESSAGE/'DATE'/"$(date +%x)"}
 MESSAGE=${MESSAGE/'PIXELDRAIN_URL'/"$PIXELDRAIN_LINK"}
-MESSAGE=${MESSAGE/'MD5SUM'/"$(md5sum $PACKAGE)"}
+MESSAGE=${MESSAGE/'MD5SUM'/"$(md5sum $PACKAGE | sed 's/ .*//')"}
 
 curl -s -X POST https://api.telegram.org/bot$TG_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode="MarkdownV2"
 
